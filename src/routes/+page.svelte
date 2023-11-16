@@ -5,39 +5,62 @@
 
     let medicalActs = data.medicalActs;
     let users = data.users;
-    console.log(medicalActs)
     let filterValue: string = "";
+
+    console.log(medicalActs);
 
     const filterByPatients = (filter: string) => {
         if (filter === "") {
             return medicalActs;
         } else {
             return medicalActs.filter(medicalAct => {
-                let user = users.filter(user => user.id === medicalAct.user_id)[0];
+                let user = users.filter(user => user.id === medicalAct.userId)[0];
 
-                return `${user.first_name} ${user.name}`.toLocaleLowerCase().includes(filter.toLocaleLowerCase());
+                return `${user.firstName} ${user.name}`.toLocaleLowerCase().includes(filter.toLocaleLowerCase());
             });
         }
     }
 
     $: filteredMedicalActs = filterByPatients(filterValue);
 
-    const getTime = (date: Date) => {
+    const getTime = (date: Date | undefined) => {
+        if (date === undefined) {
+            return "";
+        }
+
         let h = date.getHours();
         let m = date.getMinutes();
 
         return `${h < 10 ? `0${h}` : h}:${m < 10 ? `0${m}` : m}`
     }
+
+    const getDate = (date: Date | undefined) => {
+        if (date === undefined) {
+            return ""
+        }
+
+        return date.toLocaleDateString('en-GB');
+    }
 </script>
 
 
 <div class="w-screen h-screen flex flex-col gap-4 p-4 items-center">
-    <input
-        class="input input-bordered w-full max-w-md" 
-        type="text" 
-        bind:value={filterValue} 
-        placeholder="Nom du patient"
-    >
+    <div class="w-full max-w-md flex flex-row">
+        <input
+            class="input input-bordered grow gap-2" 
+            type="text" 
+            bind:value={filterValue} 
+            placeholder="Nom du patient"
+        >
+        <select 
+            name="select-hospital" 
+            id="select-hospital" 
+            class="select select-bordered"
+            placeholder="Hôpital"
+        >
+
+        </select>
+    </div>
     <table class="table table-zebra">
         <thead>
             <tr>
@@ -51,11 +74,11 @@
         <tbody>
             {#each filteredMedicalActs as medicalAct}
                 <tr>
-                    <th>{medicalAct.date_prevue.toLocaleDateString('en-GB')}</th>
-                    <th>{getTime(medicalAct.date_prevue)}</th>
+                    <th>{getDate(medicalAct.datePrevue)}</th>
+                    <th>{getTime(medicalAct.datePrevue)}</th>
                     <th>{medicalAct.id}</th>
-                    <th>{medicalAct.user_id}</th>
-                    <th>{medicalAct.confirmation_rdv ? '✅ oui' : '❌ non'}</th>
+                    <th>{medicalAct.userId}</th>
+                    <th>{medicalAct.confirmationRdv ? '✅ Oui' : '❌ Non'}</th>
                 </tr>
             {/each}
         </tbody>

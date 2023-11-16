@@ -11,7 +11,9 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-export * from "./api";
-export * from "./configuration";
-export * from "./models";
+export * from './apis/hospital-api';
+export * from './apis/medical-act-api';
+export * from './apis/medical-act-result-api';
+export * from './apis/mutuelle-api';
+export * from './apis/user-api';
 
