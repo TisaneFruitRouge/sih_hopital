@@ -25,7 +25,7 @@
             fetch(`${PUBLIC_API_URL}/medical_act/${medicalAct.id}/results`, {
                 method: 'POST',
                 body: JSON.stringify({
-                    id: medicalAct.id,
+                    medical_act_id: medicalAct.id,
                     file_name: `${crypto.randomUUID()}.pdf`,
                     file_data: base64
                 }),
