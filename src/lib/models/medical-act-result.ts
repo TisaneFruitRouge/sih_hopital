@@ -40,5 +40,5 @@ export interface MedicalActResult {
      * @type {Blob}
      * @memberof MedicalActResult
      */
-    file_data?: Blob;
+    file_data?: string;
 }

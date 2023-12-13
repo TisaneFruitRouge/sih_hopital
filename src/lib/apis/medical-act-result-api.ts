@@ -16,7 +16,7 @@ import type { AxiosResponse, AxiosInstance, AxiosRequestConfig } from "axios";
 import type { Configuration } from '../configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
+import { BASE_PATH, RequestArgs, BaseAPI, RequiredError } from '../base';
 import type { MedicalActResult } from '../models';
 /**
  * MedicalActResultApi - axios parameter creator

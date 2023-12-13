@@ -3,7 +3,7 @@
     import { getTimeOfDay } from "$lib/utils/date";
     import type { ChangeEventHandler } from "svelte/elements";
     import type { PageData } from "./$types";
-    import { sendMedicalResult } from "$lib/utils/sendMedicalResult";
+    import { PUBLIC_API_URL } from "$env/static/public";
 
     export let data: PageData;
 
@@ -19,9 +19,19 @@
         const file = e.target?.files[0];
         const filereader = new FileReader();
         filereader.readAsDataURL(file);
-        filereader.onload = function (evt) {
+        filereader.onload = (evt) => {
             const base64 = evt.target?.result;
-            sendMedicalResult(base64 as string, medicalAct.id as number);
+            
+            fetch(`${PUBLIC_API_URL}/medical_act/${medicalAct.id}/results`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    id: medicalAct.id,
+                    file_name: `${crypto.randomUUID()}.pdf`,
+                    file_data: base64
+                }),
+            }).then(
+                resp => console.log(resp.status)
+            );
         }
     }
 

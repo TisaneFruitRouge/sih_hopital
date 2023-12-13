@@ -8,6 +8,8 @@ export const load:LayoutServerLoad = async () => {
     const userAPI = new UserApi({basePath: PUBLIC_API_URL, accessToken: "test"});
     const mututelleAPI = new MutuelleApi({basePath: PUBLIC_API_URL, accessToken: 'test'});
 
+    
+
     const usersData = (await userAPI.userGet()).data;
     const hospitalData = (await hopitalAPI.hospitalGet()).data;
     const mutuellesData = (await mututelleAPI.mutuelleGet()).data;
