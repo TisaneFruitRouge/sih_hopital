@@ -28,7 +28,7 @@ export interface User {
      * @type {string}
      * @memberof User
      */
-    firstName?: string;
+    first_name?: string;
     /**
      * 
      * @type {string}
@@ -46,11 +46,11 @@ export interface User {
      * @type {string}
      * @memberof User
      */
-    idGraulande?: string;
+    id_graulande?: string;
     /**
      * 
      * @type {number}
      * @memberof User
      */
-    mutuelleId?: number;
+    mutuelle_id?: number;
 }

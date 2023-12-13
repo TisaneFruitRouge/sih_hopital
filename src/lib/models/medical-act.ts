@@ -28,19 +28,19 @@ export interface MedicalAct {
      * @type {number}
      * @memberof MedicalAct
      */
-    userId?: number;
+    user_id?: number;
     /**
      * 
      * @type {number}
      * @memberof MedicalAct
      */
-    hospitalId?: number;
+    hospital_id?: number;
     /**
      * 
      * @type {number}
      * @memberof MedicalAct
      */
-    mutuelleId?: number;
+    mutuelle_id?: number;
     /**
      * 
      * @type {string}
@@ -58,49 +58,49 @@ export interface MedicalAct {
      * @type {number}
      * @memberof MedicalAct
      */
-    montantTotal?: number;
+    montant_total?: number;
     /**
      * 
      * @type {number}
      * @memberof MedicalAct
      */
-    priseEnChargeHopital?: number;
+    prise_en_charge_hopital?: number;
     /**
      * 
      * @type {number}
      * @memberof MedicalAct
      */
-    priseEnChargeMutuelle?: number;
+    prise_en_charge_mutuelle?: number;
     /**
      * 
      * @type {number}
      * @memberof MedicalAct
      */
-    priseEnChargePatient?: number;
+    prise_en_charge_patient?: number;
     /**
      * 
      * @type {boolean}
      * @memberof MedicalAct
      */
-    confirmationPaiementPatient?: boolean;
+    confirmation_paiement_patient?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof MedicalAct
      */
-    confirmationMutuelle?: boolean;
+    confirmation_mutuelle?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof MedicalAct
      */
-    confirmationRdv?: boolean;
+    confirmation_rdv?: boolean;
     /**
      * 
      * @type {number}
      * @memberof MedicalAct
      */
-    pourcentagePriseEnCharge?: number;
+    pourcentage_prise_en_charge?: number;
     /**
      * 
      * @type {string}
@@ -112,17 +112,17 @@ export interface MedicalAct {
      * @type {Date}
      * @memberof MedicalAct
      */
-    dateCreation?: Date;
+    date_creation?: string;
     /**
      * 
      * @type {Date}
      * @memberof MedicalAct
      */
-    datePrevue?: Date;
+    date_prevue?: string;
     /**
      * 
      * @type {Date}
      * @memberof MedicalAct
      */
-    dateVenue?: Date;
+    date_venue?: string;
 }

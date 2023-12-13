@@ -28,17 +28,17 @@ export interface MedicalActResult {
      * @type {number}
      * @memberof MedicalActResult
      */
-    medicalActId?: number;
+    medical_act_id?: number;
     /**
      * 
      * @type {string}
      * @memberof MedicalActResult
      */
-    fileName?: string;
+    file_name?: string;
     /**
      * 
      * @type {Blob}
      * @memberof MedicalActResult
      */
-    fileData?: Blob;
+    file_data?: Blob;
 }
