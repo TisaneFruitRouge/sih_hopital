@@ -76,7 +76,7 @@
             body: JSON.stringify({
                 metadata1: metadata1,
                 metadata2: metadata2,
-                date_venue: new Date().toLocaleString()
+                date_venue: new Date().toISOString()
             })
         });
 
