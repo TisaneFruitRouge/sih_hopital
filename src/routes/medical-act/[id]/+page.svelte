@@ -71,13 +71,13 @@
     }
 
     const saveMetadatas = async () => {
+        const obj = {...medicalAct};
+        obj.metadata1 = metadata1;
+        obj.metadata2 = metadata2;
+        obj.date_venue = new Date().toISOString();
         const response = await fetch(`${PUBLIC_API_URL}/medical_act/${medicalAct.id}`,{
             method: 'PUT',
-            body: JSON.stringify({
-                metadata1: metadata1,
-                metadata2: metadata2,
-                date_venue: new Date().toISOString()
-            })
+            body: JSON.stringify(obj)
         });
 
         let data = await response.json();
