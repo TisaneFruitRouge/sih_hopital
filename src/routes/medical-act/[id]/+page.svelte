@@ -5,6 +5,7 @@
     import type { PageData } from "./$types";
     import { PUBLIC_API_URL } from "$env/static/public";
     import { onMount } from "svelte";
+    import Textarea from "$lib/components/Textarea.svelte";
 
     export let data: PageData;
 
@@ -58,6 +59,31 @@
         };
     }
 
+    let metadata1 = medicalAct.metadata1 ?? "";
+    let metadata2 = medicalAct.metadata2 ?? "";
+
+    const changeMetadata1 = async (s:string) => {
+        metadata1 = s;
+    }
+
+    const changeMetadata2 = async (s:string) => {
+        metadata2 = s;
+    }
+
+    const saveMetadatas = async () => {
+        const response = await fetch(`${PUBLIC_API_URL}/medical_act/${medicalAct.id}`,{
+            method: 'PUT',
+            body: JSON.stringify({
+                metadata1: metadata1,
+                metadata2: metadata2,
+                date_venue: new Date().toLocaleString()
+            })
+        });
+
+        let data = await response.json();
+        console.log(data);
+    }
+
 </script>
 
 <main class="p-8 bg-slate-100 w-screen min-h-screen flex flex-col gap-4 items-center">
@@ -85,16 +111,23 @@
         <div class="grid buffer"></div>
         <TextWithLabel 
             label="Examen"
-            value={medicalAct.confirmation_rdv ? 'Oui' : 'Non'}
+            value={medicalAct.commentaire ?? ""}
         />
-        <TextWithLabel 
-            label="Metadata 1"
-            value={medicalAct.confirmation_rdv ? 'Oui' : 'Non'}
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+        <Textarea 
+            label="Observation 1"
+            value={medicalAct.metadata1 ?? ""}
+            onChange={changeMetadata1}
         />
-        <TextWithLabel 
-            label="Metadata 2"
-            value={medicalAct.confirmation_rdv ? 'Oui' : 'Non'}
+        <Textarea 
+            label="Observation 2"
+            value={medicalAct.metadata2 ?? ""}
+            onChange={changeMetadata2}
         />
+        <button class="btn btn-primary" on:click={saveMetadatas}>
+            Confirmer le rendez-vous
+        </button>
     </div>
     <div class="flex flex-col gap-1">
         {#if fileUploadSuccess}
