@@ -21,7 +21,7 @@
 
     onMount(() => {
         (async () => {
-            const response = await fetch(`${PUBLIC_API_URL}/medical-act/${medicalAct.id}/results`);
+            const response = await fetch(`${PUBLIC_API_URL}/medical_act/${medicalAct.id}/results`);
             const data = await response.json();
             results = [...data];
         })();
