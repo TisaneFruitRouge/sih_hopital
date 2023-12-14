@@ -4,6 +4,7 @@
     import type { ChangeEventHandler } from "svelte/elements";
     import type { PageData } from "./$types";
     import { PUBLIC_API_URL } from "$env/static/public";
+    import { onMount } from "svelte";
 
     export let data: PageData;
 
@@ -15,6 +16,16 @@
     
     let fileUploadSuccess = false;
     let fileUploadError = false;
+
+    let results:Array<any> = [];
+
+    onMount(() => {
+        (async () => {
+            const response = await fetch(`${PUBLIC_API_URL}/medical-act/${medicalAct.id}/results`);
+            const data = await response.json();
+            results = [...data];
+        })();
+    })
 
     const submitFile:ChangeEventHandler<HTMLInputElement> = (e) => {
         //@ts-ignore
@@ -31,7 +42,14 @@
                     file_data: base64
                 }),
             })
-            .then(() => fileUploadSuccess = true)
+            .then((resp:Response) => {
+                if (resp.ok) {
+                    fileUploadSuccess = true;
+                    return;
+                }
+                throw new Error('File sending not successful');
+
+            })
             .catch(() => fileUploadError = true);
         }
         filereader.onerror = function (error) {
@@ -91,6 +109,14 @@
             on:change={submitFile}
         >
     </div>
+    {#if results.length > 0}
+        <h3>Résultats envoyés:</h3>
+        <ul class="list list-disc">
+            {#each results as result}
+                <li>{result.file_name}</li>
+            {/each}
+        </ul>
+    {/if}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
         <TextWithLabel 
             label="Montant"
