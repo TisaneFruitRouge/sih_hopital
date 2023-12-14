@@ -113,7 +113,7 @@
         <h3>Résultats envoyés:</h3>
         <ul class="list list-disc">
             {#each results as result}
-                <li>{result.file_name}</li>
+                <li><a href={result.file_data}>{result.file_name}</a></li>
             {/each}
         </ul>
     {/if}
