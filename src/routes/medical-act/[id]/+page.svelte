@@ -12,16 +12,17 @@
     const mutuelle = data.mutuelles.filter(mutuelle => mutuelle.id === patient.mutuelle_id)[0];
 
     const date = new Date(medicalAct.date_prevue ?? "").toLocaleDateString('fr-FR');
-    console.log(medicalAct)
+    
+    let fileUploadSuccess = false;
+    let fileUploadError = false;
 
     const submitFile:ChangeEventHandler<HTMLInputElement> = (e) => {
         //@ts-ignore
         const file = e.target?.files[0];
         const filereader = new FileReader();
         filereader.readAsDataURL(file);
-        filereader.onload = (evt) => {
-            const base64 = evt.target?.result;
-            
+        filereader.onload = () => {
+            const base64 = filereader.result;
             fetch(`${PUBLIC_API_URL}/medical_act/${medicalAct.id}/results`, {
                 method: 'POST',
                 body: JSON.stringify({
@@ -29,10 +30,14 @@
                     file_name: `${crypto.randomUUID()}.pdf`,
                     file_data: base64
                 }),
-            }).then(
-                resp => console.log(resp.status)
-            );
+            })
+            .then(() => fileUploadSuccess = true)
+            .catch(() => fileUploadError = true);
         }
+        filereader.onerror = function (error) {
+            console.log('Error: ', error);
+            fileUploadError = true;
+        };
     }
 
 </script>
@@ -73,12 +78,19 @@
             value={medicalAct.confirmation_rdv ? 'Oui' : 'Non'}
         />
     </div>
-    <input 
-        class="file-input file-input-bordered file-input-xs sm:file-input-sm md:file-input-md max-w-sm" 
-        type="file"
-        accept=".pdf"
-        on:change={submitFile}
-    >
+    <div class="flex flex-col gap-1">
+        {#if fileUploadSuccess}
+            <p class="text-sm md:text-md lg:text-lg text-green-500">Envoie du fichier réussi.</p>
+        {:else if fileUploadError}
+            <p class="text-sm md:text-md lg:text-lg text-red-500">Échec de l'envoie du fichier</p>
+        {/if}
+        <input 
+            class={`file-input file-input-bordered file-input-xs sm:file-input-sm md:file-input-md max-w-sm ${fileUploadSuccess ? 'border-green-500' : fileUploadError && 'border-red-500'}`}
+            type="file"
+            accept=".pdf"
+            on:change={submitFile}
+        >
+    </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
         <TextWithLabel 
             label="Montant"
