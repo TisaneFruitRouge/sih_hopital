@@ -75,6 +75,7 @@
         obj.metadata1 = metadata1;
         obj.metadata2 = metadata2;
         obj.date_venue = new Date().toISOString();
+        obj.confirmation_rdv = true;
         const response = await fetch(`${PUBLIC_API_URL}/medical_act/${medicalAct.id}`,{
             method: 'PUT',
             body: JSON.stringify(obj)
